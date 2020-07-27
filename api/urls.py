@@ -17,5 +17,5 @@ urlpatterns = [
   path('api/room/changehost/<new_host_name>', views.ChangeHostView.as_view()),
   path('api/room/join/<guid>/<username>', views.JoinRoomView.as_view()),
   path('api/room/leave/<guid>/<username>', views.LeaveRoomView.as_view()),
-  path('api/room/<username>', views.SearchRoomView.as_view()),
+  path('api/room/search/<username>', views.SearchRoomView.as_view()),
 ]

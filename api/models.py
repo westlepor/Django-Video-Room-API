@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 
 # Create your models here.
@@ -8,9 +9,14 @@ class Users(models.Model):
   mobile_token = models.CharField(max_length=255, blank=True, null=True)
 
 class Rooms(models.Model):
-  room_id = models.AutoField(primary_key=True)
-  roomname = models.CharField(blank=False, max_length=20)
-  guid = models.TextField(unique=True, max_length=255)
-  host_user = models.ForeignKey(Users, related_name='room', on_delete=models.CASCADE)
+  guid = models.UUIDField(default=uuid.uuid4,
+        editable=False, unique=True, db_index=True)
+  roomname = models.CharField(blank=True, max_length=20)
+  host_user = models.ForeignKey(Users, related_name='room', on_delete=models.CASCADE, blank=False)
   participants = models.ManyToManyField(Users, blank=True)
-  capacity_limit = models.IntegerField(default=5, blank=False)
+  capacity_limit = models.IntegerField(default=5, blank=True)
+
+  @classmethod
+  def create(cls, roomname, host_user):
+    room = cls(roomname=roomname, host_user=host_user)
+    return room

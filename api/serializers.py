@@ -17,7 +17,6 @@ class RoomSerializer(serializers.ModelSerializer):
   class Meta:
     model = Rooms
     fields = [
-      'room_id',
       'roomname',
       'guid',
       'host_user',
